@@ -2,6 +2,7 @@
  * Title: home.component.ts
  * Author: Professor Krasso
  * Date: 8/5/23
+ * Modified By: Zadkiel Rodriguez
  */
 
 // imports statements
