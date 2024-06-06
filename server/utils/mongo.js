@@ -11,7 +11,7 @@
 const { MongoClient } = require("mongodb");
 
 const MONGO_URL = "mongodb+srv://nodebucket_user:s3cret@nodebucketdb.ri1mkev.mongodb.net/?retryWrites=true&w=majority&appName=nodebucketDB";
-// Connect to the database
+// Connecting to the database
 const mongo = async (operations, next) => {
   try {
     console.log("Connecting to database");

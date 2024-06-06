@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+/*
+  Title: styles.css
+  Author: Zadkiel Rodriguez Alvarado
+  Date: 6/4/2024
+  Description: Styles for the app.
+*/
+.background-dark-green {
+  background-color: #1a472a;
+}
+
+.background-green {
+  background-color: #2a623d;
+}
+
+.background-dark-grey {
+  background-color: #5d5d5d;
+}
+
+.background-light-grey {
+  background-color: #aaa;
+}
+
+.background-black {
+  background-color: #000;
+}
+
+.green {
+  color: #1a472a;
+}
