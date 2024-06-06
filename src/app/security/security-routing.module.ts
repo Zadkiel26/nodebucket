@@ -9,12 +9,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SecurityComponent } from './security.component';
+import { SigninComponent } from './signin/signin.component';
 
 const routes: Routes = [
   {
     path: '',
     component: SecurityComponent,
-    title: 'Nodebucket: Security'
+    title: 'Nodebucket: Security',
+    children: [
+      {
+        path: 'signin',
+        component: SigninComponent,
+        title: 'Nodebucket: Sign In'
+      }
+    ]
   }
 ];
 
