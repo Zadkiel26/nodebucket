@@ -25,3 +25,7 @@
 .pointer {
   cursor: pointer;
 }
+
+.line {
+  font-size: 18px;
+}
