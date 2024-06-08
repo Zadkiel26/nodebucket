@@ -1,3 +1,9 @@
+/**
+ * Title: signin.component.ts
+ * Author: Professor Krasso
+ * Date: 6/5/24
+ * Modified By: Zadkiel Rodriguez
+ */
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -42,7 +48,7 @@ export class SigninComponent {
 
     if(!empId || isNaN(parseInt(empId, 10))) {
       console.log("The employee ID is invalid.");
-      this.errorMessage = "The employee ID is invalid.";
+      this.errorMessage = "The employee ID is invalid. Please try again.";
       this.isLoading = false;
       return;
     }
@@ -56,6 +62,9 @@ export class SigninComponent {
 
         this.cookieService.set('session_user', empId, 1);
         this.cookieService.set('session_name', `${employee.firstName} ${employee.lastName}`, 1);
+
+        localStorage.setItem('session_user', JSON.stringify(employee));
+        localStorage.setItem('session_name', `${employee.firstName} ${employee.lastName}`);
 
         const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
 

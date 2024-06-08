@@ -1,0 +1,11 @@
+.misc {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.error-message {
+  width: 85%;
+  margin: 0 auto;
+  padding-bottom: 10px;
+  font-size: 0.8rem;
+}

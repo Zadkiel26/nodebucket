@@ -1,3 +1,9 @@
+/**
+ * Title: security.service.ts
+ * Author: Professor Krasso
+ * Date: 6/5/24
+ * Modified By: Zadkiel Rodriguez
+ */
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 

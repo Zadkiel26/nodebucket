@@ -6,3 +6,22 @@
   Description: Styles for the nav component.
 
 */
+.nav-logo {
+  width: 50px;
+  padding-right: 10px;
+}
+
+.text-shadow {
+  text-shadow: .5px .5px #a7a7a7;
+}
+
+.hr-white {
+  width: 90%;
+  height: 2px;
+  color: #fff;
+  margin: 0 auto;
+}
+
+.pointer {
+  cursor: pointer;
+}

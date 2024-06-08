@@ -1,3 +1,9 @@
+/**
+ * Title: auth.guard.ts
+ * Author: Professor Krasso
+ * Date: 6/5/24
+ * Modified By: Zadkiel Rodriguez
+ */
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';

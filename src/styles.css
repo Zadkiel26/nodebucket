@@ -5,26 +5,58 @@
   Date: 6/4/2024
   Description: Styles for the app.
 */
+body {
+  background-color: #858585 !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
 .background-dark-green {
-  background-color: #1a472a;
+  background-color: #1a472a !important;
 }
 
 .background-green {
-  background-color: #2a623d;
+  background-color: #2a623d !important;
 }
 
 .background-dark-grey {
-  background-color: #5d5d5d;
+  background-color: #5d5d5d !important;
 }
 
 .background-light-grey {
-  background-color: #aaa;
+  background-color: #aaa !important;
 }
 
 .background-black {
-  background-color: #000;
+  background-color: #000 !important;
 }
 
 .green {
-  color: #1a472a;
+  color: #108338 !important;
+}
+
+.dark-green {
+  color: #1a472a !important;
+}
+
+.white {
+  color: #fff !important;
+}
+
+.logo {
+  width: 300px;
+  padding: 20px;
+}
+
+.signin-logo {
+  width: 200px;
+  padding-bottom: 20px;
+}
+
+.btn {
+  transition: box-shadow 0.3s ease, background-color 0.3s ease !important;
+}
+
+.btn:hover {
+  background-color: #108338 !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4) !important;
 }
