@@ -1,1 +1,61 @@
-<nav></nav>
+<nav class="ps-3 navbar navbar-expand-sm navbar-dark bg-dark">
+  <img src="../../../assets/Slytherin.png" alt="Slytherin Logo" class="nav-logo">
+  <a routerLink="/" class="navbar-brand green">nodebucket</a>
+
+  <button
+  class="navbar-toggler"
+  type="button"
+  data-bs-toggle="collapse"
+  data-bs-target="#navbarResponsive"
+  aria-controls="navbarResponsinve"
+  aria-expanded="false"
+  aria-label="Toggle navigation"
+  >
+
+  <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav ms-auto p-2">
+
+      <li class="nav-item">
+        <a routerLink="/home" class="nav-link green">Home</a>
+      </li>
+
+      <li class="nav-item">
+        <a routerLink="#" class="nav-link green">About us</a>
+      </li>
+
+      <li class="nav-item">
+        <a routerLink="#" class="nav-link green">Contact Us</a>
+      </li>
+      <li *ngIf="isSignedIn" class="nav-item dropdown">
+        <a
+          href="#"
+          class="nav-link pe-3"
+          id="navbarDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          >
+          <span class="material-icons green">person</span>
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end bg-dark" aria-labelledby="navbarDropdown">
+          <li class="dropdown-item green">
+            <span class="fw-bold">{{ appUser.fullName }}</span>
+          </li>
+          <hr class="hr-white">
+          <li>
+            <a routerLink="/tasks" class="dropdown-item green">My Tasks</a>
+          </li>
+          <li>
+            <a (click)="signOut()" class="dropdown-item link green pointer">Sign Out</a>
+          </li>
+        </ul>
+      </li>
+      <li></li>
+    </ul>
+  </div>
+
+</nav>

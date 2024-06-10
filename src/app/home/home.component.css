@@ -1,0 +1,32 @@
+.btn {
+  width: 25%;
+}
+
+.container {
+  background-color: #dbd6d6;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 5px 8px 10px #0000002f;
+}
+
+.logo-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  text-align: center;
+}
+
+.word-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  font-family: "Dancing Script", sans-serif;
+  font-size: 2rem;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+}
+
