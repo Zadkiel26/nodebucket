@@ -10,9 +10,14 @@
 const express = require("express");
 const router = express.Router();
 const { mongo } = require("../utils/mongo");
-const createServer = require('http-errors');
+const createError = require('http-errors');
+const Ajv = require('ajv');
+const { ObjectId } = require('mongodb');
+
+const ajv = new Ajv(); // create an instance of the ajv npm package
 
 // Routes
+
 // Get employee by ID
 // Base: http://localhost:3000/api/employees/:empId
 // Valid: http://localhost:3000/api/employees/1007
@@ -25,24 +30,124 @@ router.get("/:empId", (req, res, next) => {
     let { empId } = req.params;
     empId = parseInt(empId, 10);
 
-    // Validate input is a number
+    // Validate empId is a number
     if (isNaN(empId)) {
       console.error("Input must be a number");
-      return next(createServer(400, "Input must be a number"));
+      return next(createError(400, "Input must be a number"));
     }
 
-    // Database query
+    // Call our mongo and return the employee with the matching empId
     mongo(async db => {
       const employees = await db.collection("employees").findOne({ empId });
       if (!employees) {
         console.error("Employee not found", empId);
-        return next(createServer(404, "Employee not found"));
+        return next(createError(404, "Employee not found"));
       }
       // Send response to client
       res.send(employees);
     }, next);
   } catch (err) {
     console.error("Error: ", err);
+    next(err);
+  }
+});
+
+// Get all employee tasks
+router.get('/:empId/tasks', (req, res, next) => {
+  try {
+    let { empId } = req.params;
+    empId = parseInt(empId, 10);
+
+    // Validate empId is a number or NaN
+    if (isNaN(empId)) {
+      console.error("Input must be a number");
+      return next(createError(400, "Input must be a number"));
+    }
+
+    // Call out mongo and return the employee's tasks with the matching empId
+    mongo(async db => {
+      const tasks = await db.collection("employees").findOne({ empId: empId }, { projection: { empId: 1, todo: 1, done: 1 } });
+      console.log('tasks: ', tasks);
+
+      // Check if the employee has tasks
+      if (!tasks) {
+        console.error("Employee has no tasks");
+        return next(createError(404, "Employee has no tasks"));
+      }
+      // Send response to client
+      res.send(tasks);
+
+    }, next);
+
+  } catch (err) {
+    console.log("Error: ", err);
+    next(err);
+  }
+});
+
+// Create a task
+
+// Task schema
+const taskSchema = {
+  type: 'object',
+  properties: {
+    text: { type: "string" }
+  },
+  required: ['text'],
+  additionalProperties: false
+}
+
+router.post('/:empId/tasks', (req, res, next) => {
+  try {
+    let { empId } = req.params;
+    empId = parseInt(empId, 10);
+
+    // Validate empId is a number or NaN
+    if (isNaN(empId)) {
+      console.error("Input must be a number");
+      return next(createError(400, "Input must be a number"));
+    }
+
+    // Call to mongo and insert a new tasks
+    mongo(async db => {
+      const employee = await db.collection('employees').findOne({ empId });
+
+      if(!empId) {
+        console.log("Employee not found.");
+        return next(createError(404, "Employee not found with empId", empId));
+      }
+
+      const validator = ajv.compile(taskSchema);
+      const valid = validator( req.body );
+
+      // If the payload is not valid return a 400 error and append the errors to the err.errors property
+      if(!valid) {
+        return next(createError(400, 'Invalid task payload', validator.errors));
+      }
+
+      // Create the new task
+      const newTask = {
+        _id : new ObjectId(),
+        text: req.body.text
+      };
+
+      // Call the mongo module and update the employee collections with the new task in the todo column
+      const result = await db.collection('employees').updateOne(
+        { empId: empId },
+        { $push: { todo: newTask }}
+      )
+
+      // Check to see if the modified count is updated; if so then the task was added to the employee field.
+      if(!result.modifiedCount) {
+        return next(createError(400, 'Unable to create task'));
+      }
+
+      res.status(201).send({ id: newTask._id });
+
+    }, next);
+
+  } catch (err) {
+    console.log("Error: ", err);
     next(err);
   }
 });
