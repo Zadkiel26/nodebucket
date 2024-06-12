@@ -25,6 +25,34 @@ const ajv = new Ajv(); // create an instance of the ajv npm package
 // Invalid: http://localhost:3000/api/employees/foo
 // Invalid: http://localhost:3000/api/employees/1000
 
+/**
+ * findEmployeeById 
+ * @openapi
+ * /api/employees/{empId}:
+ *   get:
+ *     tags:
+ *       - employees
+ *     description: API for returning a single employee object from MongoDB
+ *     summary: Retrieves an employee by ID.
+ *     parameters:
+ *       - name: empId
+ *         in: path
+ *         description: The empId requested by the user. 
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       "200":
+ *         description: Employee document in JSON format
+ *       "400":
+ *         description: Wrong input
+ *       "404":
+ *         description: Employee not found with empId
+ *       "500":
+ *         description: Server exception
+ *       "501":
+ *         description: Mongo exception
+*/
 router.get("/:empId", (req, res, next) => {
   try {
     let { empId } = req.params;
@@ -53,6 +81,34 @@ router.get("/:empId", (req, res, next) => {
 });
 
 // Get all employee tasks
+/**
+ * findAllTaskById 
+ * @openapi
+ * /api/employees/{empId}/tasks:
+ *   get:
+ *     tags:
+ *       - employees
+ *     description: API for returning all tasks from an employee
+ *     summary: Retrieves all tasks from an employee.
+ *     parameters:
+ *       - name: empId
+ *         in: path
+ *         description: The empId requested by the user. 
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       "200":
+ *         description: Employee Document in JSON format
+ *       "400":
+ *         description: Wrong input
+ *       "404":
+ *         description: Employee does not have any tasks
+ *       "500":
+ *         description: Server exception
+ *       "501":
+ *         description: Mongo exception
+*/
 router.get('/:empId/tasks', (req, res, next) => {
   try {
     let { empId } = req.params;
@@ -66,16 +122,15 @@ router.get('/:empId/tasks', (req, res, next) => {
 
     // Call out mongo and return the employee's tasks with the matching empId
     mongo(async db => {
-      const tasks = await db.collection("employees").findOne({ empId: empId }, { projection: { empId: 1, todo: 1, done: 1 } });
-      console.log('tasks: ', tasks);
+      const employee = await db.collection("employees").findOne({ empId: empId }, { projection: { empId: 1, todo: 1, done: 1 } });
 
       // Check if the employee has tasks
-      if (!tasks) {
+      if (!employee || (!employee.todo && !employee.done)) {
         console.error("Employee has no tasks");
         return next(createError(404, "Employee has no tasks"));
       }
       // Send response to client
-      res.send(tasks);
+      res.send(employee);
 
     }, next);
 
@@ -97,6 +152,43 @@ const taskSchema = {
   additionalProperties: false
 }
 
+/**
+ * createTask
+ * @openapi
+ * /api/employees/{empId}/tasks:
+ *   post:
+ *     tags:
+ *       - employees
+ *     description: API for adding new tasks to todo
+ *     summary: Create a new task.
+ *     parameters:
+ *       - name: empId
+ *         in: path
+ *         description: The empId requested by the user. 
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       description: Task's information
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               text:
+ *                 type: string
+ *     responses:
+ *       "201":
+ *         description: Task created successfully
+ *       "400":
+ *         description: Wrong input / Invalid Task Payload
+ *       "404":
+ *         description: Employee not found with empId
+ *       "500":
+ *         description: Server exception
+ *       "501":
+ *         description: Mongo exception
+*/
 router.post('/:empId/tasks', (req, res, next) => {
   try {
     let { empId } = req.params;
@@ -112,7 +204,7 @@ router.post('/:empId/tasks', (req, res, next) => {
     mongo(async db => {
       const employee = await db.collection('employees').findOne({ empId });
 
-      if(!empId) {
+      if(!employee) {
         console.log("Employee not found.");
         return next(createError(404, "Employee not found with empId", empId));
       }

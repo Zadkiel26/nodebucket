@@ -16,8 +16,8 @@ const mongo = async (operations, next) => {
   try {
     console.log("Connecting to database");
     const client = await MongoClient.connect(MONGO_URL, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      useUnifiedTopology: true
     });
     const db = client.db("nodebucket");
     console.log("Connected to database");
