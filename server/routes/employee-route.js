@@ -26,7 +26,7 @@ const ajv = new Ajv(); // create an instance of the ajv npm package
 // Invalid: http://localhost:3000/api/employees/1000
 
 /**
- * findEmployeeById 
+ * findEmployeeById
  * @openapi
  * /api/employees/{empId}:
  *   get:
@@ -37,7 +37,7 @@ const ajv = new Ajv(); // create an instance of the ajv npm package
  *     parameters:
  *       - name: empId
  *         in: path
- *         description: The empId requested by the user. 
+ *         description: The empId requested by the user.
  *         required: true
  *         schema:
  *           type: string
@@ -82,7 +82,7 @@ router.get("/:empId", (req, res, next) => {
 
 // Get all employee tasks
 /**
- * findAllTaskById 
+ * findAllTaskById
  * @openapi
  * /api/employees/{empId}/tasks:
  *   get:
@@ -93,7 +93,7 @@ router.get("/:empId", (req, res, next) => {
  *     parameters:
  *       - name: empId
  *         in: path
- *         description: The empId requested by the user. 
+ *         description: The empId requested by the user.
  *         required: true
  *         schema:
  *           type: string
@@ -135,7 +135,7 @@ router.get('/:empId/tasks', (req, res, next) => {
     }, next);
 
   } catch (err) {
-    console.log("Error: ", err);
+    console.error("Error: ", err);
     next(err);
   }
 });
@@ -164,7 +164,7 @@ const taskSchema = {
  *     parameters:
  *       - name: empId
  *         in: path
- *         description: The empId requested by the user. 
+ *         description: The empId requested by the user.
  *         required: true
  *         schema:
  *           type: string
@@ -205,7 +205,7 @@ router.post('/:empId/tasks', (req, res, next) => {
       const employee = await db.collection('employees').findOne({ empId });
 
       if(!employee) {
-        console.log("Employee not found.");
+        console.error("Employee not found.");
         return next(createError(404, "Employee not found with empId", empId));
       }
 
@@ -239,7 +239,7 @@ router.post('/:empId/tasks', (req, res, next) => {
     }, next);
 
   } catch (err) {
-    console.log("Error: ", err);
+    console.error("Error: ", err);
     next(err);
   }
 });
