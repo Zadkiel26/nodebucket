@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BaseLayoutComponent } from './layouts/base-layout/base-layout.component';
 import { HomeComponent } from './home/home.component';
-import { TasksComponent } from './tasks/tasks.component';
+import { TasksComponent } from './task-management/tasks/tasks.component';
 import { authGuard } from './shared/auth.guard';
 
 // routes array with a path, component, and title for each route in the application (e.g. home, about, contact, etc.)

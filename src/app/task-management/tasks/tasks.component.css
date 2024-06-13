@@ -1,0 +1,58 @@
+.tasks-container {
+  width: 100%;
+  max-width: 960px;
+  margin: auto;
+  margin-top: 40px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.tasks-main-title {
+  text-align: center;
+  padding: 10px;
+}
+
+.tasks-columns-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tasks-column {
+  width: 45%;
+}
+
+.tasks-column h2 {
+  text-align: center;
+}
+
+.tasks-list-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  min-height: 300px;
+}
+
+.tasks-form {
+  width: 100%;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tasks-form input[type="text"] {
+  flex-grow: 1;
+}
+
+.no-tasks {
+  text-align: center;
+  margin-top: 30%;
+}
+
+.tasks-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
