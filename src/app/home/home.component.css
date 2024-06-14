@@ -1,12 +1,6 @@
 .btn {
-  width: 25%;
-}
-
-.container {
-  background-color: #dbd6d6;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 5px 8px 10px #0000002f;
+  width: 45%;
+  height: 50px;
 }
 
 .logo-container {

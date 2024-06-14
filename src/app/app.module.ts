@@ -18,6 +18,7 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { TasksComponent } from './task-management/tasks/tasks.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BaseLayoutComponent,
     NavComponent,
     FooterComponent,
-    TasksComponent
+    TasksComponent,
+    ContactUsComponent
   ],
   imports: [
     BrowserModule,

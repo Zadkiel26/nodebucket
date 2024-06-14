@@ -1,0 +1,49 @@
+.contact-us-columns-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px
+}
+
+.contact-us-column {
+  width: 45%;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.70);
+}
+
+.contact-us-column h3 {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.address {
+  padding: 10px;
+}
+
+.email-list {
+  list-style-type: none;
+  margin-top: 30px;
+  padding-left: 0;
+}
+
+hr {
+  display: block;
+  color: #000 !important;
+  width: 90%;
+  margin: 20px auto;
+}
+
+.sub-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4rem;
+}
+
+.black {
+  color: #000;
+}
+
+.icon {
+  font-size: 1.5rem;
+}

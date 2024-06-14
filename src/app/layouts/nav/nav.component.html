@@ -19,15 +19,20 @@
     <ul class="navbar-nav ms-auto p-2">
 
       <li class="nav-item">
-        <a routerLink="/home" class="nav-link green">Home</a>
+        <a
+        routerLink="/home"
+        routerLinkActive="active"
+        class="nav-link green pointer"
+        [routerLinkActiveOptions]="{exact: true}"
+        [ngClass]="{'active': isHomeRouteActive()}">Home</a>
       </li>
 
       <li class="nav-item">
-        <a routerLink="#" class="nav-link green">About us</a>
+        <a routerLink="#" routerLinkActive="active" class="nav-link green pointer" [routerLinkActiveOptions]="{exact: true}">About us</a>
       </li>
 
       <li class="nav-item">
-        <a routerLink="#" class="nav-link green">Contact Us</a>
+        <a routerLink="/contact-us" routerLinkActive="active" class="nav-link green pointer" [routerLinkActiveOptions]="{exact: true}">Contact Us</a>
       </li>
       <li *ngIf="isSignedIn" class="nav-item dropdown">
         <a
@@ -47,7 +52,7 @@
           </li>
           <hr class="hr-white">
           <li>
-            <a routerLink="/tasks" class="dropdown-item green">My Tasks</a>
+            <a routerLink="/tasks" class="dropdown-item link green">My Tasks</a>
           </li>
           <li>
             <a (click)="signOut()" class="dropdown-item link green pointer">Sign Out</a>

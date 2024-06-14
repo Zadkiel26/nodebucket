@@ -8,6 +8,7 @@
 // imports statements
 import { Component } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { IsActiveMatchOptions, Router } from '@angular/router';
 
 export interface AppUser {
   fullName: string;
@@ -22,7 +23,7 @@ export class NavComponent {
   appUser: AppUser;
   isSignedIn: boolean;
 
-  constructor(private cookieService: CookieService) {
+  constructor(private cookieService: CookieService, private router: Router) {
     this.appUser = {} as AppUser;
     this.isSignedIn = this.cookieService.get('session_user') ? true : false;
 
@@ -38,5 +39,16 @@ export class NavComponent {
     console.log('Removing the session_user from the cookie');
     this.cookieService.deleteAll();
     window.location.href = '/';
+  }
+
+  isHomeRouteActive(): boolean {
+    const homeMatchOptions: IsActiveMatchOptions = {
+      paths: 'exact',
+      queryParams: 'exact',
+      fragment: 'ignored',
+      matrixParams: 'ignored'
+    };
+
+    return this.router.isActive('/home', homeMatchOptions) || this.router.isActive('/', homeMatchOptions);
   }
 }

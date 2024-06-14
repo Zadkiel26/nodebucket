@@ -1,9 +1,9 @@
 .tasks-container {
   width: 100%;
   max-width: 960px;
+  height: 100%;
   margin: auto;
-  margin-top: 40px;
-  background-color: #fff;
+  margin-top: 10px;
   padding: 20px;
   border-radius: 4px;
 }
@@ -11,6 +11,7 @@
 .tasks-main-title {
   text-align: center;
   padding: 10px;
+  margin-bottom: 10px;
 }
 
 .tasks-columns-container {
@@ -20,6 +21,7 @@
 
 .tasks-column {
   width: 45%;
+  margin-top: 30px;
 }
 
 .tasks-column h2 {
@@ -27,9 +29,11 @@
 }
 
 .tasks-list-container {
-  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
   padding: 10px;
-  min-height: 300px;
+  min-height: 600px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
 }
 
 .tasks-form {
@@ -45,7 +49,7 @@
 
 .no-tasks {
   text-align: center;
-  margin-top: 30%;
+  margin-top: 50%;
 }
 
 .tasks-card {

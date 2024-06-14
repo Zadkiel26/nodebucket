@@ -1,11 +1,11 @@
 <!-- Main container -->
 <div class="tasks-container">
-  <h1 class="tasks-main-title">My tasks</h1>
+  <h1 class="tasks-main-title dark-green">My tasks</h1>
 
   <!-- Task form -->
   <form #taskForm="ngForm" (ngSubmit)="createTask(taskForm); taskForm.reset()" class="tasks-form">
-    <input type="text" name="task" ngModel required placeholder="Enter a new task...">
-    <input type="submit" value="Add Task" [disabled]="!taskForm.valid">
+    <input type="text" name="task" ngModel required placeholder="Enter a new task..." class="input-group-text">
+    <input type="submit" value="Add Task" [disabled]="!taskForm.valid" class="btn background-green white fw-bold">
   </form>
 
   <!-- Tasks container -->
@@ -13,7 +13,7 @@
 
     <!-- Todo tasks column-->
     <div class="tasks-column">
-      <h2>Todo</h2>
+      <h2 class="dark-green">Todo</h2>
       <div class="tasks-list-container">
 
         <div *ngIf="todo.length === 0 || !todo" class="no-tasks alert alert-danger">
@@ -29,7 +29,7 @@
 
     <!-- Done tasks column -->
     <div class="tasks-column">
-      <h2>Done</h2>
+      <h2 class="dark-green">Done</h2>
       <div class="tasks-list-container">
 
         <div *ngIf="done.length === 0 || !done" class="no-tasks alert alert-danger">

@@ -1,6 +1,9 @@
-<div class="container text-center mt-5">
+<div class="text-center mt-5">
   <ng-container *ngIf="isLoggedIn; else loggedOut">
     <h1 class="dark-green">Welcome to Nodebucket {{ authService.getFullName() }}!</h1>
+    <br>
+    <br>
+    <br>
     <div class="logo-container">
       <p class="word-container green fw-bold">Ambition</p>
       <p class="word-container green fw-bold">Cunning</p>
@@ -13,6 +16,9 @@
   </ng-container>
   <ng-template #loggedOut>
     <h1 class="dark-green">Welcome to Nodebucket!</h1>
+    <br>
+    <br>
+    <br>
     <div class="logo-container">
       <p class="word-container green fw-bold">Ambition</p>
       <p class="word-container green fw-bold">Cunning</p>
@@ -23,8 +29,15 @@
       <p class="word-container green fw-bold">Resourceful</p>
     </div>
     <br>
+    <br>
+    <br>
     <a routerLink="/security/signin" class="btn btn-lg background-green white">Log in</a>
   </ng-template>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
   <br>
   <p class="lead mt-3 fw-bold">Nodebucket is a task management application. You can manage your tasks by adding, editing, and deleting them. You can also move tasks between different states like In Progress or Done.</p>
 </div>
