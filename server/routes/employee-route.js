@@ -18,13 +18,6 @@ const ajv = new Ajv(); // create an instance of the ajv npm package
 
 // Routes
 
-// Get employee by ID
-// Base: http://localhost:3000/api/employees/:empId
-// Valid: http://localhost:3000/api/employees/1007
-
-// Invalid: http://localhost:3000/api/employees/foo
-// Invalid: http://localhost:3000/api/employees/1000
-
 /**
  * findEmployeeById
  * @openapi
@@ -87,7 +80,6 @@ router.get("/:empId", (req, res, next) => {
   }
 });
 
-// Get all employee tasks
 /**
  * findAllTaskById
  * @openapi
@@ -151,8 +143,6 @@ router.get('/:empId/tasks', (req, res, next) => {
     next(err);
   }
 });
-
-// Create a task
 
 // Single task schema
 const taskSchema = {
@@ -263,7 +253,7 @@ router.post('/:empId/tasks', (req, res, next) => {
   }
 });
 
-// Tasks array schema
+// Tasks arrays schema
 const tasksSchema = {
   type: 'object',
   required: ['todo', 'done'],
@@ -296,8 +286,62 @@ const tasksSchema = {
   }
 }
 
-// Update task
-
+/**
+ * updateTask
+ * @openapi
+ * /api/employees/{empId}/tasks:
+ *   put:
+ *     tags:
+ *       - employees
+ *     description: API for updating the Todo and Done arrays of tasks
+ *     summary: Update the tasks arrays.
+ *     parameters:
+ *       - name: empId
+ *         in: path
+ *         description: The Employee ID requested by the user.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       description: Task's information
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - todo
+ *               - done
+ *             type: object
+ *             properties:
+ *               todo:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                      _id: 
+ *                         type: string
+ *                      text:
+ *                         type: string
+ *               done:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                      _id: 
+ *                         type: string
+ *                      text:
+ *                         type: string     
+ *     responses:
+ *       "204":
+ *         description: Tasks Arrays Updated
+ *       "400":
+ *         description: Wrong input / Invalid Task Payload
+ *       "404":
+ *         description: Employee not found with empId
+ *       "500":
+ *         description: Server exception
+ *       "501":
+ *         description: Mongo exception
+*/
 router.put('/:empId/tasks', (req, res, next) => {
   try {
     // Grab the empId from the parameters
@@ -351,8 +395,40 @@ router.put('/:empId/tasks', (req, res, next) => {
   }
 });
 
-// Delete Task
-
+/**
+ * deleteTask
+ * @openapi
+ * /api/employees/{empId}/tasks/{taskId}:
+ *   delete:
+ *     tags:
+ *       - employees
+ *     description: API for deleting a task
+ *     summary: Delete a task.
+ *     parameters:
+ *       - name: empId
+ *         in: path
+ *         description: The Employee ID requested by the user.
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - name: taskId
+ *         in: path
+ *         description: The Task ID requested by the user.
+ *         required: true
+ *         schema:
+ *           type: string    
+ *     responses:
+ *       "204":
+ *         description: Tasks Deleted
+ *       "400":
+ *         description: Wrong input / Invalid Task Payload
+ *       "404":
+ *         description: Employee not found with empId
+ *       "500":
+ *         description: Server exception
+ *       "501":
+ *         description: Mongo exception
+*/
 router.delete('/:empId/tasks/:taskId', (req, res, next) => {
   try {
 
