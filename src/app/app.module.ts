@@ -19,6 +19,8 @@ import { TasksComponent } from './task-management/tasks/tasks.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
     NavComponent,
     FooterComponent,
     TasksComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    NotFoundComponent,
+    AboutUsComponent
   ],
   imports: [
     BrowserModule,

@@ -23,7 +23,7 @@ const routes: Routes = [
       {
         path: '',
         component: HomeComponent,
-        title: 'Nodebucket: Home' // title for the home page
+        title: 'Nodebucket: Home'
       },
       {
         path: 'home',

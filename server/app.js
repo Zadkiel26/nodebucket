@@ -42,9 +42,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 app.use('/api/employees', employeeRoute);
 
 // error handler for 404 errors
-// app.use(function(req, res, next) {
-//   next(createError(404, 'Not found')); // forward to error handler
-// })
+app.use(function(req, res, next) {
+next(createError(404, 'not found')); // forward to error handler
+})
 
 // error handler for all other errors
 app.use(function(err, req, res, next) {

@@ -1,3 +1,9 @@
+/**
+ * Title: auth.service.ts
+ * Author: Zadkiel Rodriguez Alvarado
+ * Date: 6/14/2024
+ * Description: Auth Service
+ */
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 
