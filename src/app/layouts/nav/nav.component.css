@@ -7,12 +7,17 @@
 
 */
 nav {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  padding: 0;
 }
 
 .nav-logo {
-  width: 50px;
+  width: 75px;
   padding-right: 10px;
+}
+
+.navbar-brand {
+  padding: 0;
 }
 
 .navbar-nav {
