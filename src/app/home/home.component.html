@@ -1,6 +1,6 @@
 <div class="text-center mt-5">
   <ng-container *ngIf="isLoggedIn; else loggedOut">
-    <h1 class="dark-green">Welcome to Nodebucket {{ authService.getFullName() }}!</h1>
+    <h1>Welcome to the Nodebucket Task Manager App <span class="green">{{ authService.getFullName() }}</span>!</h1>
     <br>
     <br>
     <br>
@@ -15,7 +15,7 @@
     </div>
   </ng-container>
   <ng-template #loggedOut>
-    <h1 class="dark-green">Welcome to Nodebucket!</h1>
+    <h1>Welcome to the Nodebucket Task Manager App!</h1>
     <br>
     <br>
     <br>
@@ -39,5 +39,5 @@
   <br>
   <br>
   <br>
-  <p class="lead mt-3 fw-bold">Nodebucket is a task management application. You can manage your tasks by adding, editing, and deleting them. You can also move tasks between different states like In Progress or Done.</p>
+  <p class="lead mt-3 fw-bold">Nodebucket is a task management application. You can manage your tasks by adding, editing, and deleting them. You can also move tasks between different states like Todo or Done.</p>
 </div>

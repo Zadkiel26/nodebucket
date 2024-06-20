@@ -317,7 +317,7 @@ const tasksSchema = {
  *                 items:
  *                   type: object
  *                   properties:
- *                      _id: 
+ *                      _id:
  *                         type: string
  *                      text:
  *                         type: string
@@ -326,10 +326,10 @@ const tasksSchema = {
  *                 items:
  *                   type: object
  *                   properties:
- *                      _id: 
+ *                      _id:
  *                         type: string
  *                      text:
- *                         type: string     
+ *                         type: string
  *     responses:
  *       "204":
  *         description: Tasks Arrays Updated
@@ -416,7 +416,7 @@ router.put('/:empId/tasks', (req, res, next) => {
  *         description: The Task ID requested by the user.
  *         required: true
  *         schema:
- *           type: string    
+ *           type: string
  *     responses:
  *       "204":
  *         description: Tasks Deleted
@@ -439,13 +439,13 @@ router.delete('/:empId/tasks/:taskId', (req, res, next) => {
     // Parse the empId to verify if it's a number; if not a number return NaN
     empId = parseInt(empId, 10);
 
-    // Check if the empId if a number; if not return an error
+    // Check if the empId is a number; if not return an error
     if(isNaN(empId)) {
       console.error("Employee Id must to be a number.");
       return next(createError(400, `Employee id must be a number: ${empId}`));
     }
 
-    // Call the mongo module and update the employee collections with the new todo and done array of tasks
+    // Call the mongo module and delete a task
     mongo(async db => {
       // Get the employee from employee collection with the empId
       let employee = await db.collection('employees').findOne({ empId: empId });

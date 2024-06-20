@@ -8,19 +8,10 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
-
-// Task interface
-export interface Item {
-  _id: string;
-  text: string;
-}
-
-// Employee interface
-export interface Employee {
-  empId: number;
-  todo: Array<Item>;
-  done: Array<Item>;
-}
+import { Employee } from './employee.interface';
+import { Task } from './task.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-tasks',
@@ -31,10 +22,10 @@ export class TasksComponent {
   // local variables
   empId: number;
   employee: Employee;
-  todo: Array<Item>;
-  done: Array<Item>;
+  todo: Array<Task>;
+  done: Array<Task>;
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {
+  constructor(private http: HttpClient, private cookieService: CookieService, public dialog: MatDialog) {
     // Assign the local variables
     this.empId = parseInt(this.cookieService.get('session_user'), 10);
     this.employee = {} as Employee;
@@ -88,5 +79,53 @@ export class TasksComponent {
         }
       })
     }
+  }
+
+  // Update the tasks
+  updateTask(todo: Task[], done: Task[]) {
+    // Do a put request to the API to update the tasks arrays
+    this.http.put(`'/api/employees/${ this.empId }/tasks'`, { todo, done }).subscribe({
+      next: (result: any) => {
+        console.log('Update Successful');
+      },
+      error: (err) => {
+        // Log an error if the update of the arrays failed
+        console.error('Unable to update the tasks arrays: ', err);
+      }
+    })
+  }
+
+  // Delete the task
+  deleteTask(taskId: string) {
+
+    // Create the dialog with custom blur overlay
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      panelClass: 'custom-dialog-container',
+      disableClose: true,
+      autoFocus: false,
+      backdropClass: 'blur-overlay'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        // Do a delete request to the API with the empID and taskID
+        this.http.delete(`/api/employees/${ this.empId }/tasks/${taskId}`).subscribe({
+          next: (result: any) => {
+            // Make sure if the tasks arrays are null to initialize them to an empty array
+            if(!this.todo) this.todo = [];
+            if(!this.done) this.done = [];
+
+            // Delete the task that matches the taskID
+            this.todo = this.todo.filter(task => task._id.toString() !== taskId.toString());
+            this.done = this.done.filter(task => task._id.toString() !== taskId.toString());
+
+          },
+          error: (err) => {
+            // Log an error is the task was unable to delete
+            console.error('Unable to delete task: ', err);
+          }
+        });
+      }
+    });
   }
 }

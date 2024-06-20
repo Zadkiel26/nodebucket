@@ -1,3 +1,13 @@
 .about-us-container {
     text-align: center;
+    padding: 20px;
+}
+
+h1 {
+  text-transform: uppercase;
+}
+
+p {
+  font-size: 18px;
+  line-height: 2rem;
 }

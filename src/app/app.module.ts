@@ -8,6 +8,9 @@
 // imports statements
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +24,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { ConfirmDialogComponent } from './task-management/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -32,14 +36,18 @@ import { AboutUsComponent } from './about-us/about-us.component';
     TasksComponent,
     ContactUsComponent,
     NotFoundComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

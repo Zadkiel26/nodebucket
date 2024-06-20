@@ -5,6 +5,8 @@
   Date: 6/4/2024
   Description: Styles for the app.
 */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 body {
   background-color: #858585 !important;
   font-family: 'Poppins', sans-serif !important;
@@ -69,4 +71,19 @@ body {
   border-radius: 5px;
   padding: 20px;
   box-shadow: 5px 8px 10px #0000002f;
+}
+
+.blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(2px);
+  z-index: 1; /* Make sure the blur overlay is above the page */
+  pointer-events: none;
+}
+
+.dialog-container {
+  z-index: 9999; /* Make sure the dialog container is above the blur effect */
 }

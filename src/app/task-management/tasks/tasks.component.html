@@ -20,8 +20,11 @@
           No tasks to do yet!
         </div>
 
-        <div *ngFor="let item of todo" class="tasks-card">
-          {{ item.text }}
+        <div *ngFor="let task of todo" class="tasks-card">
+          {{ task.text }}
+          <button class="delete-btn float-end" (click)="deleteTask(task._id)">
+            <span class="material-icons delete-icon">delete</span>
+          </button>
         </div>
 
       </div>
@@ -36,8 +39,11 @@
           No tasks done yet!
         </div>
 
-        <div *ngFor="let item of done" class="tasks-card alert alert-danger">
-          {{ item.text }}
+        <div *ngFor="let task of done" class="tasks-card alert alert-danger">
+          {{ task.text }}
+          <button class="delete-btn float-end" (click)="deleteTask(task._id)">
+            <span class="material-icons delete-icon">delete</span>
+          </button>
         </div>
       </div>
     </div>
