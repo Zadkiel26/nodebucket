@@ -12,6 +12,7 @@ import { Employee } from './employee.interface';
 import { Task } from './task.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-tasks',
@@ -82,9 +83,9 @@ export class TasksComponent {
   }
 
   // Update the tasks
-  updateTask(todo: Task[], done: Task[]) {
+  updateTasksList(todo: Task[], done: Task[]) {
     // Do a put request to the API to update the tasks arrays
-    this.http.put(`'/api/employees/${ this.empId }/tasks'`, { todo, done }).subscribe({
+    this.http.put(`/api/employees/${ this.empId }/tasks`, { todo, done }).subscribe({
       next: (result: any) => {
         console.log('Update Successful');
       },
@@ -106,11 +107,13 @@ export class TasksComponent {
       backdropClass: 'blur-overlay'
     });
 
+    // After the dialog is confirmed; then delete the task with the taskId
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
         // Do a delete request to the API with the empID and taskID
         this.http.delete(`/api/employees/${ this.empId }/tasks/${taskId}`).subscribe({
           next: (result: any) => {
+
             // Make sure if the tasks arrays are null to initialize them to an empty array
             if(!this.todo) this.todo = [];
             if(!this.done) this.done = [];
@@ -127,5 +130,28 @@ export class TasksComponent {
         });
       }
     });
+  }
+  
+  // Drop event for the cdkDragDrop
+  drop(event: CdkDragDrop<any[]>) {
+    if (event.previousContainer === event.container) {
+      // If the task is dropped in the same container; then update the index depending on where is dropped 
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+
+      // Call the update task list to update the list in the database with the new index
+      this.updateTasksList(this.todo, this.done);
+
+    } else {
+      // If the task was dropped in a different container; then move it to the new container
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+      
+      // Call the update task list to update the todo and done arrays in the database with the new tasks added/removed
+      this.updateTasksList(this.todo, this.done);
+    }
   }
 }

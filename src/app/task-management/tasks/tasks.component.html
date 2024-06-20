@@ -14,13 +14,18 @@
     <!-- Todo tasks column-->
     <div class="tasks-column">
       <h2 class="dark-green">Todo</h2>
-      <div class="tasks-list-container">
+      <div class="tasks-list-container"
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="todo"
+      [cdkDropListConnectedTo]="[doneList]"
+      (cdkDropListDropped)="drop($event)">
 
         <div *ngIf="todo.length === 0 || !todo" class="no-tasks alert alert-danger">
           No tasks to do yet!
         </div>
 
-        <div *ngFor="let task of todo" class="tasks-card">
+        <div *ngFor="let task of todo" cdkDrag class="tasks-card">
           {{ task.text }}
           <button class="delete-btn float-end" (click)="deleteTask(task._id)">
             <span class="material-icons delete-icon">delete</span>
@@ -33,13 +38,18 @@
     <!-- Done tasks column -->
     <div class="tasks-column">
       <h2 class="dark-green">Done</h2>
-      <div class="tasks-list-container">
+      <div class="tasks-list-container"
+      cdkDropList
+      #doneList="cdkDropList"
+      [cdkDropListData]="done"
+      [cdkDropListConnectedTo]="[todoList]"
+      (cdkDropListDropped)="drop($event)">
 
         <div *ngIf="done.length === 0 || !done" class="no-tasks alert alert-danger">
           No tasks done yet!
         </div>
 
-        <div *ngFor="let task of done" class="tasks-card alert alert-danger">
+        <div *ngFor="let task of done" cdkDrag class="tasks-card alert alert-danger">
           {{ task.text }}
           <button class="delete-btn float-end" (click)="deleteTask(task._id)">
             <span class="material-icons delete-icon">delete</span>
