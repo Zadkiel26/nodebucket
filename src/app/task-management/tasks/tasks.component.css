@@ -91,3 +91,15 @@
   padding: 16px;
   width: 300px; /* Adjust width as needed */
 }
+
+.cdk-drag-preview {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 0.2s ease-in-out;
+}
