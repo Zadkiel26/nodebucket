@@ -1,6 +1,7 @@
 .tasks-container {
   width: 100%;
-  max-width: 960px;
+  min-width: 960px;
+  max-width: 1280px;
   height: 100%;
   margin: auto;
   margin-top: 10px;
@@ -42,7 +43,6 @@
   width: 100%;
   margin-bottom: 20px;
   display: flex;
-  justify-content: space-between;
 }
 
 .tasks-form input[type="text"] {
