@@ -32,7 +32,9 @@
   border-radius: 4px;
   background-color: #fff;
   padding: 10px;
-  min-height: 600px;
+  min-height: 500px;
+  max-height: 600px;
+  overflow-y: auto;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
 }
 
@@ -81,15 +83,15 @@
 }
 
 .blur-background {
-  filter: blur(4px); /* Adjust the blur amount as desired */
+  filter: blur(4px);
 }
 
 .custom-dialog-container {
-  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better visual effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 16px;
-  width: 300px; /* Adjust width as needed */
+  width: 300px;
 }
 
 .cdk-drag-preview {
