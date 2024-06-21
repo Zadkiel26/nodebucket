@@ -125,7 +125,7 @@ router.get('/:empId/tasks', (req, res, next) => {
     // Call out mongo and return the employee's tasks with the matching empId
     mongo(async db => {
       // Find the employee with the empId; then return the empId, todo array and done array
-      const employee = await db.collection("employees").findOne({ empId: empId }, { projection: { empId: 1, todo: 1, done: 1 } });
+      const employee = await db.collection("employees").findOne({ empId: empId }, { projection: { empId: 1, todo: 1, doing: 1, done: 1 } });
 
       // Check if the employee exists; then return an error
       if (!employee) {
@@ -256,10 +256,22 @@ router.post('/:empId/tasks', (req, res, next) => {
 // Tasks arrays schema
 const tasksSchema = {
   type: 'object',
-  required: ['todo', 'done'],
+  required: ['todo', 'doing', 'done'],
   additionalProperties: false,
   properties: {
     todo: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          _id: { type: 'string' },
+          text: { type: 'string' }
+        },
+        required: [ '_id', 'text' ],
+        additionalProperties: false
+      }
+    },
+    doing: {
       type: 'array',
       items: {
         type: 'object',
@@ -313,6 +325,15 @@ const tasksSchema = {
  *             type: object
  *             properties:
  *               todo:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                      _id:
+ *                         type: string
+ *                      text:
+ *                         type: string
+ *               doing:
  *                 type: array
  *                 items:
  *                   type: object
@@ -381,7 +402,7 @@ router.put('/:empId/tasks', (req, res, next) => {
       // Update the todo array and done array of the employee with the empId
       const result = await db.collection('employees').updateOne(
         { empId: empId },
-        { $set: { todo: tasks.todo, done: tasks.done } }
+        { $set: { todo: tasks.todo, doing: tasks.doing, done: tasks.done } }
       )
 
       // Send successful response to the client
@@ -456,18 +477,20 @@ router.delete('/:empId/tasks/:taskId', (req, res, next) => {
         return next(createError(404, `Employee not found with empId: ${empId}`));
       }
 
-      // Define the todo and done arrays if they don't exist to empty arrays
+      // Define the todo, in progress and done arrays if they don't exist to empty arrays
       if(!employee.todo) employee.todo = [];
+      if(!employee.doing) employee.doing = [];
       if(!employee.done) employee.done = [];
 
       // Filter the todo and done array with the taskId; If the taskId doesn't match then continue to next until found
       const todo = employee.todo.filter(task => task._id.toString() !== taskId.toString());
+      const doing = employee.doing.filter(task => task._id.toString() !== taskId.toString());
       const done = employee.done.filter(task => task._id.toString() !== taskId.toString());
 
       // Update the todo and done array from the employee with empId
       const result = await db.collection('employees').updateOne(
         { empId: empId },
-        { $set: { todo: todo, done: done } }
+        { $set: { todo: todo, doing: doing, done: done } }
       );
 
       // Send successful response to the client

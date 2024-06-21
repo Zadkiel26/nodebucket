@@ -24,6 +24,7 @@ export class TasksComponent {
   empId: number;
   employee: Employee;
   todo: Array<Task>;
+  doing: Array<Task>;
   done: Array<Task>;
 
   constructor(private http: HttpClient, private cookieService: CookieService, public dialog: MatDialog) {
@@ -31,6 +32,7 @@ export class TasksComponent {
     this.empId = parseInt(this.cookieService.get('session_user'), 10);
     this.employee = {} as Employee;
     this.todo = [];
+    this.doing = [];
     this.done = [];
 
     // Call the get all tasks function
@@ -49,9 +51,11 @@ export class TasksComponent {
         console.error('Unable to get the employee data for employee ID: ', this.empId);
       },
       complete: () => {
-        // Return the todo and done columns if there is anything on them; If they are nothing on them then return an empty array
+        // Return the todo, in progress and done columns if there is anything on them; If they are nothing on them then return an empty array
         this.todo = this.employee.todo ?? []; // If the todo array is empty then it will be assign to an empty array
         this.done = this.employee.done ?? []; // If the done array is empty then it will be assign to an empty array
+        this.doing = this.employee.doing ?? []; // If the doing array is empty then it will be assign to an empty array
+        console.log(this.employee.doing);
       }
     });
   }
@@ -83,9 +87,9 @@ export class TasksComponent {
   }
 
   // Update the tasks
-  updateTasksList(todo: Task[], done: Task[]) {
+  updateTasksList(todo: Task[], doing: Task[], done: Task[]) {
     // Do a put request to the API to update the tasks arrays
-    this.http.put(`/api/employees/${ this.empId }/tasks`, { todo, done }).subscribe({
+    this.http.put(`/api/employees/${ this.empId }/tasks`, { todo, doing, done }).subscribe({
       next: (result: any) => {
         console.log('Update Successful');
       },
@@ -116,10 +120,12 @@ export class TasksComponent {
 
             // Make sure if the tasks arrays are null to initialize them to an empty array
             if(!this.todo) this.todo = [];
+            if(!this.doing) this.doing = [];
             if(!this.done) this.done = [];
 
             // Delete the task that matches the taskID
             this.todo = this.todo.filter(task => task._id.toString() !== taskId.toString());
+            this.doing = this.doing.filter(task => task._id.toString() !== taskId.toString());
             this.done = this.done.filter(task => task._id.toString() !== taskId.toString());
 
           },
@@ -131,15 +137,15 @@ export class TasksComponent {
       }
     });
   }
-  
+
   // Drop event for the cdkDragDrop
   drop(event: CdkDragDrop<any[]>) {
     if (event.previousContainer === event.container) {
-      // If the task is dropped in the same container; then update the index depending on where is dropped 
+      // If the task is dropped in the same container; then update the index
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 
       // Call the update task list to update the list in the database with the new index
-      this.updateTasksList(this.todo, this.done);
+      this.updateTasksList(this.todo, this.doing, this.done);
 
     } else {
       // If the task was dropped in a different container; then move it to the new container
@@ -149,9 +155,9 @@ export class TasksComponent {
         event.previousIndex,
         event.currentIndex
       );
-      
-      // Call the update task list to update the todo and done arrays in the database with the new tasks added/removed
-      this.updateTasksList(this.todo, this.done);
+
+      // Call the update task list to update the arrays in the database with the new tasks added/removed
+      this.updateTasksList(this.todo, this.doing, this.done);
     }
   }
 }

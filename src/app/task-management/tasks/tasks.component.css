@@ -20,7 +20,7 @@
 }
 
 .tasks-column {
-  width: 45%;
+  width: 32%;
   margin-top: 30px;
 }
 
@@ -100,8 +100,4 @@
 
 .cdk-drag-placeholder {
   opacity: 0;
-}
-
-.cdk-drag-animating {
-  transition: transform 0.2s ease-in-out;
 }
