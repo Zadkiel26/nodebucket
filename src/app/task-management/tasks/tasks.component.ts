@@ -26,6 +26,8 @@ export class TasksComponent {
   todo: Array<Task>;
   doing: Array<Task>;
   done: Array<Task>;
+  successfulMessage: string;
+  errorMessage: string;
 
   constructor(private http: HttpClient, private cookieService: CookieService, public dialog: MatDialog) {
     // Assign the local variables
@@ -34,6 +36,8 @@ export class TasksComponent {
     this.todo = [];
     this.doing = [];
     this.done = [];
+    this.successfulMessage = '';
+    this.errorMessage = '';
 
     // Call the get all tasks function
     this.getAllTasks()
@@ -77,10 +81,17 @@ export class TasksComponent {
           };
           // Push the new task to the todo array
           this.todo.push(newTodoItem);
+
+          // Display a successful message
+          this.successfulMessage = 'Task created successfully and added to Todo!';
+          this.clearMessageAfterDelay();
         },
         error: (err) => {
           // Log an error if the task was not created
           console.error('Unable to create task for employee: ', this.empId, err);
+          // Display an error message
+          this.errorMessage = err.message;
+          this.clearMessageAfterDelay();
         }
       })
     }
@@ -92,10 +103,16 @@ export class TasksComponent {
     this.http.put(`/api/employees/${ this.empId }/tasks`, { todo, doing, done }).subscribe({
       next: (result: any) => {
         console.log('Update Successful');
+        // Display a successful message
+        this.successfulMessage = 'Task moved successfully!';
+        this.clearMessageAfterDelay();
       },
       error: (err) => {
         // Log an error if the update of the arrays failed
         console.error('Unable to update the tasks arrays: ', err);
+        // Display an error message
+        this.errorMessage = err.message;
+        this.clearMessageAfterDelay();
       }
     })
   }
@@ -128,10 +145,16 @@ export class TasksComponent {
             this.doing = this.doing.filter(task => task._id.toString() !== taskId.toString());
             this.done = this.done.filter(task => task._id.toString() !== taskId.toString());
 
+            // Display a successful message
+            this.successfulMessage = 'Task deleted successfully!';
+            this.clearMessageAfterDelay();
           },
           error: (err) => {
             // Log an error is the task was unable to delete
             console.error('Unable to delete task: ', err);
+            // Display an error message
+            this.errorMessage = err.message;
+            this.clearMessageAfterDelay();
           }
         });
       }
@@ -160,4 +183,21 @@ export class TasksComponent {
       this.updateTasksList(this.todo, this.doing, this.done);
     }
   }
+
+  // Clear the message after a delay (3s)
+  clearMessageAfterDelay() {
+
+    // Set the timeout of the message
+    setTimeout(() => {
+      const messageElements = document.querySelectorAll('.message');
+      messageElements.forEach((element) => {
+        element.classList.add('fade-out');
+      });
+      setTimeout(() => {
+        this.errorMessage = '';
+        this.successfulMessage = '';
+      }, 500); // Time for the fade-out animation to complete
+    }, 1000); // Delay before starting the fade-out
+  }
 }
+

@@ -8,6 +8,18 @@
     <input type="submit" value="Add Task" [disabled]="!taskForm.valid" class="btn background-green white fw-bold">
   </form>
 
+  <div class="message-container">
+    <div *ngIf="errorMessage" role="alert" class="alert alert-danger message">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successfulMessage" role="alert" class="alert alert-success message">
+      {{ successfulMessage }}
+    </div>
+  </div>
+
+
+
   <!-- Tasks container -->
   <div class="tasks-columns-container">
 
@@ -25,7 +37,7 @@
           No tasks to do yet!
         </div>
 
-        <div *ngFor="let task of todo" cdkDrag cdkDragData="task" class="tasks-card">
+        <div *ngFor="let task of todo" cdkDrag [cdkDragData]="task" class="tasks-card" [ngClass]="{'todo-task': true}">
           {{ task.text }}
           <button class="delete-btn float-end" (click)="deleteTask(task._id)">
             <span class="material-icons delete-icon">delete</span>
@@ -46,10 +58,10 @@
       (cdkDropListDropped)="drop($event)">
 
         <div *ngIf="doing.length === 0 || !doing" class="no-tasks alert alert-danger">
-          No tasks to do yet!
+          No tasks doing yet!
         </div>
 
-        <div *ngFor="let task of doing" cdkDrag cdkDragData="task" class="tasks-card">
+        <div *ngFor="let task of doing" cdkDrag [cdkDragData]="task" class="tasks-card" [ngClass]="{'doing-task': true}">
           {{ task.text }}
           <button class="delete-btn float-end" (click)="deleteTask(task._id)">
             <span class="material-icons delete-icon">delete</span>
@@ -73,7 +85,7 @@
           No tasks done yet!
         </div>
 
-        <div *ngFor="let task of done" cdkDrag cdkDragData="task" class="tasks-card alert alert-danger">
+        <div *ngFor="let task of done" cdkDrag [cdkDragData]="task" class="tasks-card" [ngClass]="{'done-task': true}">
           {{ task.text }}
           <button class="delete-btn float-end" (click)="deleteTask(task._id)">
             <span class="material-icons delete-icon">delete</span>
