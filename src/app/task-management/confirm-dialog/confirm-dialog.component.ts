@@ -1,4 +1,3 @@
-import { PostMigrationAction } from './../../../../node_modules/@angular/cdk/schematics/update-tool/migration.d';
 /**
  * Title: confirm-dialog.component.js
  * Author: Zadkiel Rodriguez Alvarado
